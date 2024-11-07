@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-11-2024 a las 09:25:13
+-- Tiempo de generación: 07-11-2024 a las 19:32:34
 -- Versión del servidor: 5.7.35-0ubuntu0.18.04.2
 -- Versión de PHP: 8.0.10
 
@@ -104,15 +104,16 @@ CREATE TABLE `profesor` (
   `dni` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `foto` varchar(10000) COLLATE utf8_spanish_ci DEFAULT NULL,
   `idarea` bigint(20) DEFAULT NULL,
-  `claveaccesoprof` text COLLATE utf8_spanish_ci NOT NULL
+  `claveaccesoprof` text COLLATE utf8_spanish_ci NOT NULL,
+  `isOrientador` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `profesor`
 --
 
-INSERT INTO `profesor` (`id`, `nombre`, `apellidos`, `dni`, `foto`, `idarea`, `claveaccesoprof`) VALUES
-(2, 'Adrián', 'Rs', '78111053V', '', 1, 'adri1234');
+INSERT INTO `profesor` (`id`, `nombre`, `apellidos`, `dni`, `foto`, `idarea`, `claveaccesoprof`, `isOrientador`) VALUES
+(2, 'Adrián', 'Rs', '78111053V', '', 1, 'adri1234', 0);
 
 -- --------------------------------------------------------
 
