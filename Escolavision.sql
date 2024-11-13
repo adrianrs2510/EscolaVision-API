@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-11-2024 a las 19:32:34
+-- Tiempo de generación: 13-11-2024 a las 12:05:12
 -- Versión del servidor: 5.7.35-0ubuntu0.18.04.2
 -- Versión de PHP: 8.0.10
 
@@ -42,7 +42,8 @@ CREATE TABLE `alumno` (
 --
 
 INSERT INTO `alumno` (`id`, `foto`, `nombre`, `apellidos`, `dni`, `claveaccesoalum`, `idprofesor`) VALUES
-(1, '', 'Adrián', 'Rs', '78111054H', 'adrii1234', 2);
+(1, '', 'Adrián', 'Rs', '12345', '1234', 2),
+(2, '', 'Ismael', 'TG', '123456', '1234', 3);
 
 -- --------------------------------------------------------
 
@@ -62,7 +63,8 @@ CREATE TABLE `area` (
 --
 
 INSERT INTO `area` (`id`, `nombre`, `descripción`, `logo`) VALUES
-(1, 'AREA 1', 'AREA 1 --> Descripcion', '');
+(1, 'AREA 1', 'AREA 1 --> Descripcion', ''),
+(2, 'AREA2', 'Area2 Descripcion', '');
 
 -- --------------------------------------------------------
 
@@ -79,6 +81,14 @@ CREATE TABLE `intentos` (
   `resultados` text COLLATE utf8_spanish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `intentos`
+--
+
+INSERT INTO `intentos` (`id`, `idtest`, `idalumno`, `fecha`, `hora`, `resultados`) VALUES
+(1, 1, 1, '2024-11-12', '10:40:00', '10;13'),
+(2, 2, 2, '2024-11-13', '12:53:00', '50;50');
+
 -- --------------------------------------------------------
 
 --
@@ -90,6 +100,14 @@ CREATE TABLE `pregunta` (
   `idtest` bigint(20) DEFAULT NULL,
   `enunciado` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pregunta`
+--
+
+INSERT INTO `pregunta` (`id`, `idtest`, `enunciado`) VALUES
+(1, 1, 'Hola??'),
+(2, 2, 'Adios??');
 
 -- --------------------------------------------------------
 
@@ -105,7 +123,7 @@ CREATE TABLE `profesor` (
   `foto` varchar(10000) COLLATE utf8_spanish_ci DEFAULT NULL,
   `idarea` bigint(20) DEFAULT NULL,
   `claveaccesoprof` text COLLATE utf8_spanish_ci NOT NULL,
-  `isOrientador` tinyint(1) NOT NULL DEFAULT '0'
+  `isOrientador` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -113,7 +131,8 @@ CREATE TABLE `profesor` (
 --
 
 INSERT INTO `profesor` (`id`, `nombre`, `apellidos`, `dni`, `foto`, `idarea`, `claveaccesoprof`, `isOrientador`) VALUES
-(2, 'Adrián', 'Rs', '78111053V', '', 1, 'adri1234', 0);
+(2, 'Adrián', 'Rs', '1234', '', 1, '1234', 1),
+(3, 'Jose Maria', 'Molina', '123456789A', '', 2, '1234', 0);
 
 -- --------------------------------------------------------
 
@@ -127,6 +146,14 @@ CREATE TABLE `pxa` (
   `idarea` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `pxa`
+--
+
+INSERT INTO `pxa` (`id`, `idpregunta`, `idarea`) VALUES
+(1, 1, 1),
+(2, 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -137,6 +164,14 @@ CREATE TABLE `test` (
   `id` bigint(20) NOT NULL,
   `nombretest` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `test`
+--
+
+INSERT INTO `test` (`id`, `nombretest`) VALUES
+(1, 'tets1'),
+(2, 'test2');
 
 --
 -- Índices para tablas volcadas
@@ -201,43 +236,43 @@ ALTER TABLE `test`
 -- AUTO_INCREMENT de la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `area`
 --
 ALTER TABLE `area`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `intentos`
 --
 ALTER TABLE `intentos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `profesor`
 --
 ALTER TABLE `profesor`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `pxa`
 --
 ALTER TABLE `pxa`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `test`
 --
 ALTER TABLE `test`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
