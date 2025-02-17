@@ -30,6 +30,19 @@ class Alumnos
 		return $result;
 	}
 
+	function leerDNI()
+	{
+		if (isset($this->dni) && $this->dni >= 0) {
+			$stmt = $this->conn->prepare("SELECT * FROM " . $this->tabla . " WHERE dni = ?");
+			$stmt->bind_param("i", $this->dni);
+		} else { 
+			$stmt = $this->conn->prepare("SELECT * FROM " . $this->tabla);
+		}
+		$stmt->execute();
+		$result = $stmt->get_result();
+		return $result;
+	}
+
 	function insertar()
 	{
 		$stmt = $this->conn->prepare("INSERT INTO " . $this->tabla . "(`nombre`, `apellidos`, `dni`, `claveaccesoalum`, `foto`, `idprofesor`) VALUES(?,?,?,?,?,?)");
@@ -71,5 +84,29 @@ class Alumnos
 		$stmt->bind_param("i", $this->id);
 		return $stmt->execute();
 	}
+
+	function verificarCredenciales($dni, $contraseña) {
+		$query = "SELECT claveaccesoalum FROM " . $this->tabla . " WHERE dni = ?";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param("s", $dni);
+		$stmt->execute();
+		$stmt->bind_result($hashedPassword);
+		if ($stmt->fetch()) {
+			return password_verify($contraseña, $hashedPassword);
+		}
+		return false;
+	}
+	
+
+	public function obtenerDatosPorDNI($dni) {
+		$query = "SELECT id, nombre, apellidos FROM " . $this->tabla . " WHERE dni = ? LIMIT 1";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param('s', $dni); 
+		$stmt->execute();
+		
+		$result = $stmt->get_result();
+		return $result->fetch_assoc();
+	}
+	
 }
 ?>

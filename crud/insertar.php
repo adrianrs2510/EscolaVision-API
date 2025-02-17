@@ -43,18 +43,22 @@ if (isset($datos['tabla']) && array_key_exists($datos['tabla'], $tables)) {
         }
 
         if ($classInstance->insertar()) {
-            http_response_code(201);
+            http_response_code(200);
+            $response['status'] = "success";
             $response["message"] = "El registro de la tabla " . ucfirst($tabla) . " fue creado con éxito.";
         } else {
             http_response_code(503);
+            $response['status'] = "error";
             $response["message"] = "No se puede crear el registro en la tabla " . ucfirst($tabla) . ".";
         }
     } else {
         http_response_code(400);
+        $response['status'] = "error";
         $response["message"] = "Datos no especificados para la inserción.";
     }
 } else {
     http_response_code(400);
+    $response['status'] = "error";
     $response["message"] = "Tabla no reconocida o no especificada.";
 }
 

@@ -5,6 +5,7 @@ class Preguntas
 	public $id;
 	public $idtest;
 	public $enunciado;
+	public $titulo;
 	private $conn;
 
 	public function __construct($db)
@@ -29,12 +30,14 @@ class Preguntas
 	// Método para insertar un nuevo registro en la tabla alumno
 	function insertar()
 	{
-		$stmt = $this->conn->prepare("INSERT INTO " . $this->tabla . "(`idtest`, `enunciado`) VALUES(?,?)");
+		$stmt = $this->conn->prepare("INSERT INTO " . $this->tabla . "(`idtest`, `enunciado`, `titulo`) VALUES(?,?,?)");
 
 		$this->idtest = strip_tags($this->idtest);
 		$this->enunciado = strip_tags($this->enunciado);
+		$this->titulo = strip_tags($this->titulo);
 
-		$stmt->bind_param("ss", $this->idtest, $this->enunciado);
+
+		$stmt->bind_param("sss", $this->idtest, $this->enunciado, $this->titulo);
 
 		return $stmt->execute();
 

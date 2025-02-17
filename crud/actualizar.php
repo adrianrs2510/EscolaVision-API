@@ -54,14 +54,17 @@ if (isset($datos['tabla']) && array_key_exists($datos['tabla'], $tables)) {
             $response["message"] = "El registro de la tabla " . ucfirst($tabla) . " fue actualizado con éxito.";
         } else {
             http_response_code(503);
+            $response['status'] = "error";
             $response["message"] = "No se puede actualizar el registro en la tabla " . ucfirst($tabla) . ".";
         }
     } else {
         http_response_code(400);
+        $response['status'] = "error";
         $response["message"] = "Datos no especificados para la actualización o ID no proporcionado.";
     }
 } else {
     http_response_code(400);
+    $response['status'] = "error";
     $response["message"] = "Tabla no reconocida o no especificada.";
 }
 

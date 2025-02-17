@@ -35,9 +35,15 @@ if (isset($_GET['tabla']) && array_key_exists($_GET['tabla'], $tables)) {
 
     if (isset($_GET['id'])) {
         $classInstance->id = $_GET['id'];
+        $result = $classInstance->leer();
+    } else {
+        if ($tabla == "alumnos" || $tabla == "profesores") {
+            $result = $classInstance->leerDNI();
+        } else {
+            $result = $classInstance->leer();
+        }
     }
 
-    $result = $classInstance->leer();
     if ($result->num_rows > 0) {
         $dataList = array();
         while ($data = $result->fetch_assoc()) {

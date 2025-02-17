@@ -2,11 +2,12 @@
 class EscolaVision
 {
 	private $host = 'localhost';
-	private $user = 'admin';
-	private $password = "Fy1AE0nvvyLC";
+	private $user = 'EscolaVision';
+	private $password = "EscolaVision";
 	private $database = "EscolaVision";
 
-	//Fy1AE0nvvyLC
+	// rhVBlfz5TtEB -- Adrián
+	// S0aShRCJndWi -- Ismael
 
 	public function dameConexion()
 	{

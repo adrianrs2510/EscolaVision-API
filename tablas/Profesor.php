@@ -30,6 +30,19 @@ class Profesor
 		return $result;
 	}
 
+	function leerDNI()
+	{
+		if (isset($this->dni) && $this->dni >= 0) {
+			$stmt = $this->conn->prepare("SELECT * FROM " . $this->tabla . " WHERE dni = ?");
+			$stmt->bind_param("i", $this->dni);
+		} else { 
+			$stmt = $this->conn->prepare("SELECT * FROM " . $this->tabla);
+		}
+		$stmt->execute();
+		$result = $stmt->get_result();
+		return $result;
+	}
+
 	// Método para insertar un nuevo registro en la tabla alumno
 	function insertar()
 	{
@@ -75,5 +88,30 @@ class Profesor
 		$stmt->bind_param("i", $this->id);
 		return $stmt->execute();
 	}
+
+	function verificarCredenciales($dni, $contraseña) {
+		$query = "SELECT claveaccesoprof FROM " . $this->tabla . " WHERE dni = ?";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param("s", $dni);
+		$stmt->execute();
+		$stmt->bind_result($hashedPassword);
+		if ($stmt->fetch()) {
+			return password_verify($contraseña, $hashedPassword);
+		}
+		return false;
+	}
+	
+
+	public function obtenerDatosPorDNI($dni) {
+		$query = "SELECT id, nombre, apellidos, isOrientador FROM " . $this->tabla . " WHERE dni = ? LIMIT 1";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param('s', $dni); // Cambiar bindParam a bind_param
+		$stmt->execute();
+		
+		$result = $stmt->get_result();
+		return $result->fetch_assoc(); // Retorna los datos como un array asociativo
+	}
+	
+	
 }
 ?>
