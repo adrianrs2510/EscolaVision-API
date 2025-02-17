@@ -86,26 +86,25 @@ class Alumnos
 	}
 
 	function verificarCredenciales($dni, $contraseña) {
-		$query = "SELECT claveaccesoalum FROM " . $this->tabla . " WHERE dni = ?";
+		// Ajustar la consulta para que use el método correcto de mysqli
+		$query = "SELECT * FROM " . $this->tabla . " WHERE dni = ? AND claveaccesoalum = ?";
 		$stmt = $this->conn->prepare($query);
-		$stmt->bind_param("s", $dni);
+		$stmt->bind_param("ss", $dni, $contraseña); // 'ss' para dos parámetros de tipo string
 		$stmt->execute();
-		$stmt->bind_result($hashedPassword);
-		if ($stmt->fetch()) {
-			return password_verify($contraseña, $hashedPassword);
-		}
-		return false;
+		
+		// Verificar si la consulta ha encontrado algún registro
+		$result = $stmt->get_result();
+		return $result->num_rows > 0; // Si hay registros, las credenciales son correctas
 	}
-	
 
 	public function obtenerDatosPorDNI($dni) {
 		$query = "SELECT id, nombre, apellidos FROM " . $this->tabla . " WHERE dni = ? LIMIT 1";
 		$stmt = $this->conn->prepare($query);
-		$stmt->bind_param('s', $dni); 
+		$stmt->bind_param('s', $dni); // Cambiar bindParam a bind_param
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
-		return $result->fetch_assoc();
+		return $result->fetch_assoc(); // Retorna los datos como un array asociativo
 	}
 	
 }
